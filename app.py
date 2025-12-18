@@ -1,8 +1,11 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import geopandas as gpd
 import folium
 from streamlit_folium import st_folium
+import plotly.express as px
+import os
 
 st.set_page_config(layout="wide", page_title="Ondas de Calor – Semiárido")
 
@@ -11,12 +14,19 @@ st.set_page_config(layout="wide", page_title="Ondas de Calor – Semiárido")
 # ===============================
 @st.cache_data
 def load_data():
-    df = pd.read_csv("data/ondas_calor_completo.csv")
-    micro = gpd.read_file("data/micro.shp")
-    muni = gpd.read_file("data/muni.shp")
-    return df, micro, muni
+    df = pd.read_csv(
+        "data/ondas_calor_completo.csv",
+        parse_dates=["data"]
+    )
 
-df, gdf_micro, gdf_muni = load_data()
+    # Segurança mínima
+    df = df.dropna(subset=["data", "valor", "NM_MICRO"])
+
+    # Garantir tipos
+    df["mes"] = df["data"].dt.month
+    df["ano"] = df["data"].dt.year
+
+    return df
 
 # ===============================
 # SIDEBAR
