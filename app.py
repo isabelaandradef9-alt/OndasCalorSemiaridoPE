@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import geopandas as gpd
+import plotly.express as px
 import folium
 from streamlit_folium import st_folium
-import plotly.express as px
 import os
 
 st.set_page_config(layout="wide", page_title="Ondas de Calor – Semiárido")
@@ -19,12 +19,11 @@ def load_data():
         parse_dates=["data"]
     )
 
-    # Segurança mínima
     df = df.dropna(subset=["data", "valor", "NM_MICRO"])
 
-    # Garantir tipos
-    df["mes"] = df["data"].dt.month
+    # 👉 CRIAR ANO E MÊS AQUI
     df["ano"] = df["data"].dt.year
+    df["mes"] = df["data"].dt.month
 
     return df
 
