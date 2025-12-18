@@ -11,9 +11,9 @@ st.set_page_config(layout="wide", page_title="Ondas de Calor – Semiárido")
 # ===============================
 @st.cache_data
 def load_data():
-    df = pd.read_parquet("data/ondas_calor.parquet")
-    micro = gpd.read_file("data/micro.geojson")
-    muni = gpd.read_file("data/muni.geojson")
+    df = pd.read_parquet("data/ondas_calor_completo.csv")
+    micro = gpd.read_file("data/micro.shp")
+    muni = gpd.read_file("data/muni.shp")
     return df, micro, muni
 
 df, gdf_micro, gdf_muni = load_data()
