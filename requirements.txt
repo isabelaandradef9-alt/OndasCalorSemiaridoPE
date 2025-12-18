@@ -5,3 +5,7 @@ pyarrow
 folium
 streamlit-folium
 shapely
+numpy
+folium
+streamlit-folium
+plotly
