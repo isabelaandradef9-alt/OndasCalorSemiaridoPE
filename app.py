@@ -26,7 +26,8 @@ def load_data():
     df["mes"] = df["data"].dt.month
 
     return df
-
+    
+df = load_data()
 # ===============================
 # SIDEBAR
 # ===============================
