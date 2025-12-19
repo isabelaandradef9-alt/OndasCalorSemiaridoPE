@@ -33,24 +33,18 @@ df = load_data()
 
 @st.cache_data
 def load_geodata():
-    micro_path = os.path.join("data", "PE_Microrregioes_Semiarido.shp")
+    
     micro_path = os.path.join("data", "PE_Municipios_Semiarido.shp")
 
     if not os.path.exists(micro_path):
         st.error(f"Arquivo não encontrado: {micro_path}")
         st.stop()
 
-    if not os.path.exists(muni_path):
-        st.error(f"Arquivo não encontrado: {muni_path}")
-        st.stop()
-
     gdf_micro = gpd.read_file(micro_path)
-    gdf_muni  = gpd.read_file(muni_path)
-
+    
     gdf_micro = gdf_micro.to_crs(epsg=4326)
-    gdf_muni  = gdf_muni.to_crs(epsg=4326)
-
-    return gdf_micro, gdf_muni
+    
+    return gdf_micro
 
 # ===============================
 # SIDEBAR
@@ -87,10 +81,10 @@ df_f = df[
 
 if escala == "Microrregião":
     geo = gdf_micro
-    chave = "microrregiao"
+    chave = "NM_MICRO"
 else:
-    geo = gdf_muni
-    chave = "municipio"
+    geo = gdf_micro
+    chave = "NM_MUNIC"
 
 stats = (
     df_f
