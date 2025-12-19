@@ -80,6 +80,7 @@ df_f = df[
 ]
 
 if escala == "Microrregião":
+    geo = gdf_micro
     chave = "NM_MICRO"
 else:
     chave = "NM_MUNIC"
