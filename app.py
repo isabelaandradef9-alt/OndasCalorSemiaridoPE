@@ -73,9 +73,8 @@ df_f = df[
 
 if escala == "Microrregião":
     geo = gdf_micro
-    chave = "NM_MICRO"
-else:
-    chave = "NM_MUNIC"
+    chave = "microrregiao"
+    chave_geo = "NM_MICRO"
 
 stats = (
     df_f
@@ -88,8 +87,12 @@ stats = (
     .reset_index()
 )
 
-geo = geo.merge(stats, left_on="NM_MICRO" if escala=="Microrregião" else "NM_MUNIC",
-                right_on=chave, how="left")
+geo = geo.merge(
+    stats, 
+    left_on=chave_geo,
+    right_on=chave, 
+    how="left"
+)
 
 # ===============================
 # MAPA
