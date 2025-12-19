@@ -83,7 +83,6 @@ if escala == "Microrregião":
     geo = gdf_micro
     chave = "NM_MICRO"
 else:
-    geo = gdf_micro
     chave = "NM_MUNIC"
 
 stats = (
