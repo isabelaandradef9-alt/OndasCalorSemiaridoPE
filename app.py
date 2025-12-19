@@ -46,6 +46,8 @@ def load_geodata():
     
     return gdf_micro
 
+gdf_micro = load_geodata()
+
 # ===============================
 # SIDEBAR
 # ===============================
