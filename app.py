@@ -30,6 +30,21 @@ def load_data():
     return df
     
 df = load_data()
+
+@st.cache_data
+def load_geodata():
+    gdf_micro = gpd.read_file("data/microrregioes.shp")
+    gdf_muni  = gpd.read_file("data/municipios.shp")
+
+    # garantir CRS (folium usa EPSG:4326)
+    gdf_micro = gdf_micro.to_crs(epsg=4326)
+    gdf_muni  = gdf_muni.to_crs(epsg=4326)
+
+    return gdf_micro, gdf_muni
+
+
+gdf_micro, gdf_muni = load_geodata()
+
 # ===============================
 # SIDEBAR
 # ===============================
@@ -91,10 +106,12 @@ st.title("Ondas de Calor no Semiárido Brasileiro")
 
 m = folium.Map(location=[-8.5, -38.5], zoom_start=6, tiles="cartodbpositron")
 
+geo = geo.reset_index()
+
 folium.Choropleth(
     geo_data=geo,
     data=geo,
-    columns=[geo.index, "eventos"],
+    columns=["index", "eventos"],
     key_on="feature.id",
     fill_color="YlOrRd",
     fill_opacity=0.7,
