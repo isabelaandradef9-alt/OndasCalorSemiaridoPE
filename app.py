@@ -33,17 +33,24 @@ df = load_data()
 
 @st.cache_data
 def load_geodata():
-    gdf_micro = gpd.read_file("data/microrregioes.shp")
-    gdf_muni  = gpd.read_file("data/municipios.shp")
+    micro_path = os.path.join("data", "PE_Microrregioes_Semiarido.shp")
+    micro_path = os.path.join("data", "PE_Municipios_Semiarido.shp")
 
-    # garantir CRS (folium usa EPSG:4326)
+    if not os.path.exists(micro_path):
+        st.error(f"Arquivo não encontrado: {micro_path}")
+        st.stop()
+
+    if not os.path.exists(muni_path):
+        st.error(f"Arquivo não encontrado: {muni_path}")
+        st.stop()
+
+    gdf_micro = gpd.read_file(micro_path)
+    gdf_muni  = gpd.read_file(muni_path)
+
     gdf_micro = gdf_micro.to_crs(epsg=4326)
     gdf_muni  = gdf_muni.to_crs(epsg=4326)
 
     return gdf_micro, gdf_muni
-
-
-gdf_micro, gdf_muni = load_geodata()
 
 # ===============================
 # SIDEBAR
@@ -96,7 +103,7 @@ stats = (
     .reset_index()
 )
 
-geo = geo.merge(stats, left_on="NM_MICRO" if escala=="Microrregião" else "NM_MUNICIP",
+geo = geo.merge(stats, left_on="NM_MICRO" if escala=="Microrregião" else "NM_MUNIC",
                 right_on=chave, how="left")
 
 # ===============================
