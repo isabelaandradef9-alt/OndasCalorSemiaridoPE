@@ -17,35 +17,25 @@ def load_data():
     df = pd.read_csv("data/ondas_calor_completo.csv")
 
     # converter datas
-    df["start"] = pd.to_datetime(df["start"], errors="coerce")
-    df["end"]   = pd.to_datetime(df["end"], errors="coerce")
-
-    # remover eventos inválidos
-    df = df.dropna(subset=["start", "microrregiao"])
+    df["start"] = pd.to_datetime(df["start"])
+    df["end"]   = pd.to_datetime(df["end"])
 
     # criar variáveis temporais a partir do INÍCIO do evento
     df["ano"] = df["start"].dt.year
     df["mes"] = df["start"].dt.month
 
     return df
-    
-df = load_data()
 
 @st.cache_data
 def load_geodata():
     
-    micro_path = os.path.join("data", "PE_Municipios_Semiarido.shp")
-
-    if not os.path.exists(micro_path):
-        st.error(f"Arquivo não encontrado: {micro_path}")
-        st.stop()
-
-    gdf_micro = gpd.read_file(micro_path)
+    gdf_micro = gpd.read_file("data/PE_Municipios_Semiarido.shp")
     
     gdf_micro = gdf_micro.to_crs(epsg=4326)
     
     return gdf_micro
 
+df = load_data()
 gdf_micro = load_geodata()
 
 # ===============================
