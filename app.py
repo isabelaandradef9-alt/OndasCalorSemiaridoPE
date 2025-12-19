@@ -21,7 +21,7 @@ def load_data():
     df["end"]   = pd.to_datetime(df["end"], errors="coerce")
 
     # remover eventos inválidos
-    df = df.dropna(subset=["start", "microrregiao"])
+    df = df.dropna(subset=["start", "NM_MICRO"])
 
     # criar variáveis temporais a partir do INÍCIO do evento
     df["ano"] = df["start"].dt.year
