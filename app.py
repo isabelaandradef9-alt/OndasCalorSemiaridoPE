@@ -14,16 +14,18 @@ st.set_page_config(layout="wide", page_title="Ondas de Calor – Semiárido")
 # ===============================
 @st.cache_data
 def load_data():
-    df = pd.read_csv(
-        "data/ondas_calor_completo.csv",
-        parse_dates=["data"]
-    )
+    df = pd.read_csv("data/ondas_calor_completo.csv")
 
-    df = df.dropna(subset=["data", "valor", "NM_MICRO"])
+    # converter datas
+    df["start"] = pd.to_datetime(df["start"], errors="coerce")
+    df["end"]   = pd.to_datetime(df["end"], errors="coerce")
 
-    # 👉 CRIAR ANO E MÊS AQUI
-    df["ano"] = df["data"].dt.year
-    df["mes"] = df["data"].dt.month
+    # remover eventos inválidos
+    df = df.dropna(subset=["start", "NM_MICRO"])
+
+    # criar variáveis temporais a partir do INÍCIO do evento
+    df["ano"] = df["start"].dt.year
+    df["mes"] = df["start"].dt.month
 
     return df
     
