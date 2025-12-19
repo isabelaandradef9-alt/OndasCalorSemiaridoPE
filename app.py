@@ -119,7 +119,7 @@ folium.Choropleth(
     legend_name="Número de eventos de onda de calor"
 ).add_to(m)
 
-st_folium(m, width=1200, height=600)
+#st_folium(m, width=1200, height=600)
 
 # ===============================
 # INDICADORES
