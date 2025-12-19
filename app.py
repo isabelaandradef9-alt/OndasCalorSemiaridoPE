@@ -42,11 +42,14 @@ meses = st.sidebar.multiselect(
     default=[1,2,3,4,5,6,7,8,9,10,11,12]
 )
 
+ano_min = int(df["ano"].min())
+ano_max = int(df["ano"].max())
+
 anos = st.sidebar.slider(
     "Período",
-    int(df.ano.min()),
-    int(df.ano.max()),
-    (int(df.ano.min()), int(df.ano.max()))
+    ano_min,
+    ano_max,
+    (ano_min, ano_max)
 )
 
 # ===============================
